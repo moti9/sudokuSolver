@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+<link href="{% static 'index.css' %}" rel="stylesheet" />
+<link rel="preconnect" href="https://fonts.googleapis.com" /><link
+  rel="preconnect"
+  href="https://fonts.gstatic.com"
+  crossorigin
+/><link
+  href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap"
+  rel="stylesheet"
+/>
+
+<style>
+  .solved{
+    display: {{visual}};
+  }
+
+</style>
+{% endblock css %}
+
+{% block content %}
+
+<div class="d-flex justify-content-center text-warning my-3">
+  <header>
+    Please follow the following rules-
+    <ul> 
+      <li>
+        If cell is empty - please leave 0.
+      </li>
+      <li>
+        Should be unique number in each row and column.  
+      </li>
+      <li>
+        Also should be unique number in each 3x3 sector.
+      </li>
+    </ul>
+  </header>
+</div>
+
+<div class="main">
+
+  <div class="container mx-0 justify-content-center">
+    <form action="/" method="post" class="my-2">
+    {% csrf_token %}
+    
+    <table class="table-success">
+      <tbody>
+        {% for i in "123456789" %}
+        <tr>
+          {% for j in "123456789" %}
+          <td>
+            <input
+            type="number"
+            name="num{{i}}{{j}}"
+            id="num{{i}}{{j}}"
+            min="0"
+            max="9"
+            value="0"
+            class="inputVal"
+            />
+          </td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div class="d-flex justify-content-center my-2">
+    <button class="mx-2 btn btn-success" type="submit">
+        Submit
+      </button>
+      <a class="mx-2 btn btn-primary" type="button"  href ="">
+        Reset
+      </a>
+    </div>
+  </form>
+</div>
+
+
+  <div class="solved container my-4 mx-0 justify-content-center">
+    <table>
+      <tbody>
+        {% for i in board %}
+        <tr>
+          {% for j in i %}
+          <td class="outputVal">{{j}}</td>
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </tbody>  
+  </table>
+</div>
+
+</div>
+{% endblock content %}
