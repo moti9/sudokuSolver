@@ -7,13 +7,13 @@ from django.shortcuts import render
 
 def isValid(row, col, val, board):
     for i in range(9):
-        if board[row][i] == val:
+        if board[row][i] == val and val != 0 and i != col:
             return False
-        if board[i][col] == val:
+        if board[i][col] == val and val != 0 and i != row:
             return False
-        nrow = (row//3)*3
-        ncol = (col//3)*3
-        if board[nrow + (i // 3)][ncol + (i % 3)] == val:
+        nrow = (row//3)*3+(i // 3)
+        ncol = (col//3)*3+(i % 3)
+        if board[nrow][ncol] == val and val != 0 and row != nrow and col != ncol:
             return False
 
     return True
@@ -55,9 +55,16 @@ def index(request):
                 row = int(i)-1
                 col = int(j)-1
                 sudoku[row][col] = temp
+        flag = True
+        for i in range(9):
+            for j in range(9):
+                if not isValid(i, j, sudoku[i][j], sudoku):
+                    flag = False
+                    break
 
-        if solveSudoku(sudoku):
-            board = sudoku
-            visual="block"
+        if flag:
+            if solveSudoku(sudoku):
+                board = sudoku
+                visual = "block"
 
     return render(request, 'index.html', {'board': sudoku, 'visual': visual})
