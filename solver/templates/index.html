@@ -20,19 +20,28 @@
 
 {% block content %}
 
-<div class="d-flex justify-content-center text-warning my-3">
-  <header>
-    Please follow the following rules-
-    <ul>
-      <li>If cell is empty - please leave 0.</li>
-      <li>Should be unique number in each row and column.</li>
-      <li>Also should be unique number in each 3x3 sector.</li>
-    </ul>
-  </header>
+<div class="d-flex justify-content-center  my-3 p-4">
+  <div class="col-md-6 shadow rounded text-bg-secondary p-4">
+    <h3>
+      Please follow the following rules-
+    </h3>
+    <ol>
+      <li> <b>If cell is empty - please leave 0:</b> This rule simply means that if a cell in the Sudoku grid does not
+        contain a number, it should be represented as "0."</li>
+
+      <li><b>Should be unique number in each row and column:</b> This is a key rule in Sudoku. It means that within each
+        row and each column of the Sudoku grid, every number from 1 to 9 (assuming a 9x9 grid) must appear exactly once.
+        This uniqueness constraint is what makes Sudoku challenging and interesting.</li>
+
+      <li><b>Also should be unique number in each 3x3 sector:</b> In addition to uniqueness within rows and columns,
+        Sudoku is divided into 3x3 sectors (also known as boxes or regions). Each number from 1 to 9 should also be
+        unique within each of these 3x3 sectors.</li>
+    </ol>
+  </div>
 </div>
 
 <div class="main">
-  <div class="container mx-0 justify-content-center">
+  <div class="container mx-0 justify-content-center sudoku shadow rounded">
     <form action="/" method="post" class="my-2">
       {% csrf_token %}
 
@@ -61,8 +70,22 @@
       </div>
     </form>
   </div>
-
-  <div class="container mx-0 justify-content-center solved">
+  <div>
+    
+  
+    <div class="col-md-12">
+    {% if messages %}
+    <div class="messages">
+      {% for message in messages %}
+      <div {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+      
+      <div class="container mx-0 justify-content-center solved sudoku shadow rounded">
     <table class="table-success">
       {% for i in board %}
       <tr>
@@ -71,15 +94,16 @@
           <input
             type="number"
             value="{{j}}"
-            class="inputVal"
+            class="outputVal"
             disabled
-          />
-        </td>
-        {% endfor %}
-      </tr>
-      {% endfor %}
-    </table>
+            />
+            </td>
+            {% endfor %}
+            </tr>
+            {% endfor %}
+            </table>
 
+</div>
   </div>
 </div>
 {% endblock content %}

@@ -1,5 +1,5 @@
-from django.shortcuts import render
-
+from django.shortcuts import render,redirect
+from django.contrib import messages
 # Create your views here.
 
 # Check validation
@@ -39,21 +39,21 @@ def solveSudoku(board):
 # Index page
 
 
+# Index page
 def index(request):
     r, c = 9, 9
     board = [[0 for i in range(c)] for j in range(r)]
 
     sudoku = board
-
     visual = "none"
 
     if request.method == "POST":
         for i in "123456789":
             for j in "123456789":
-                nm = "num"+i+j
+                nm = "num" + i + j
                 temp = int(request.POST.get(nm, '0'))
-                row = int(i)-1
-                col = int(j)-1
+                row = int(i) - 1
+                col = int(j) - 1
                 sudoku[row][col] = temp
         flag = True
         for i in range(9):
@@ -66,5 +66,42 @@ def index(request):
             if solveSudoku(sudoku):
                 board = sudoku
                 visual = "block"
+                messages.error(request, "Hurrah !!, solution found. ", extra_tags="alert alert-success alert-dismissible fade show")
+            else:
+                messages.error(request, "No solution found. Please check your input.", extra_tags="alert alert-danger alert-dismissible fade show")
+                return redirect('index')  # Redirect back to the form
+        else:
+            messages.error(request, "Invalid input. Please make sure the Sudoku rules are followed.", extra_tags="alert alert-warning alert-dismissible fade show")
+            return redirect('index')  # Redirect back to the form
 
-    return render(request, 'index.html', {'board': sudoku, 'visual': visual})
+    return render(request, 'index.html', {'board': board, 'visual': visual})
+
+# def index(request):
+#     r, c = 9, 9
+#     board = [[0 for i in range(c)] for j in range(r)]
+
+#     sudoku = board
+
+#     visual = "none"
+
+#     if request.method == "POST":
+#         for i in "123456789":
+#             for j in "123456789":
+#                 nm = "num"+i+j
+#                 temp = int(request.POST.get(nm, '0'))
+#                 row = int(i)-1
+#                 col = int(j)-1
+#                 sudoku[row][col] = temp
+#         flag = True
+#         for i in range(9):
+#             for j in range(9):
+#                 if not isValid(i, j, sudoku[i][j], sudoku):
+#                     flag = False
+#                     break
+
+#         if flag:
+#             if solveSudoku(sudoku):
+#                 board = sudoku
+#                 visual = "block"
+
+#     return render(request, 'index.html', {'board': sudoku, 'visual': visual})

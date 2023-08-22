@@ -1,12 +1,13 @@
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-    background-color: rgb(120, 138, 132);
+    /* box-sizing: border-box; */
+    /* background-color: rgb(120, 138, 132); */
 }
 
-body{
-    background-color: blueviolet;
+body {
+    background-image: url('sudoku-bg.jpg');
+    background-size: cover;
 }
 
 tr {
@@ -26,7 +27,9 @@ input::-webkit-inner-spin-button {
 }
 
 .main {
-    background-color: rgb(7, 7, 7);
+    /* background-image: url('static/sudoku-bg.jpg'); */
+    /* background-size: cover; */
+    /* background-color: rgb(7, 7, 7); */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -35,7 +38,7 @@ input::-webkit-inner-spin-button {
     padding: 10px 15px;
 }
 
-.inputVal{
+.inputVal {
     height: 2.5rem;
     width: 2rem;
     /* display: flex; */
@@ -43,14 +46,34 @@ input::-webkit-inner-spin-button {
     align-items: center;
     padding: 0.5rem;
     border-radius: 4px;
-    border: 0.1rem solid red;
+    border: 0.1rem solid blue;
     margin: 0.15rem;
-    background-color: rgb(218, 213, 213);
+    /* background-color: rgb(218, 213, 213); */
+}
+
+.inputVal:hover{
+    border-color: rgb(3, 39, 1);
+    font-weight: bolder;
+}
+
+.outputVal {
+    height: 2.5rem;
+    width: 2rem;
+    /* display: flex; */
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: 0.1rem solid green;
+    margin: 0.15rem;
+    font-weight: bold;
+    color: navy;
+    /* background-color: rgb(218, 213, 213); */
 }
 
 .container {
+    height: 350px;
     width: 350px;
-    height: 350pxpx;
     justify-content: center;
     align-items: center;
     font-size: 1.5rem;
@@ -58,8 +81,14 @@ input::-webkit-inner-spin-button {
     border-radius: 10px;
 }
 
+.sudoku{
+    background-color: gray;
+    height: fit-content;
+    width: fit-content;
+}
 
-.solved{
+
+.solved {
     font-size: 1.5rem;
     font-weight: bolder;
 
